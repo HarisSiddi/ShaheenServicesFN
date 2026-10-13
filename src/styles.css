@@ -1,0 +1,246 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Shaheen Services — premium facility management design system.
+ * Palette: crimson/dark-red gradients, charcoal, light grey, white.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-deep: var(--primary-deep);
+  --color-primary-glow: var(--primary-glow);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-foreground: var(--charcoal-foreground);
+  --color-charcoal-soft: var(--charcoal-soft);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --shadow-soft: 0 2px 8px oklch(0.2 0.02 20 / 0.06), 0 18px 40px -22px oklch(0.2 0.02 20 / 0.28);
+  --shadow-float: 0 30px 70px -30px oklch(0.25 0.06 25 / 0.42);
+  --shadow-glow: 0 18px 50px -18px oklch(0.55 0.22 27 / 0.55);
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-float-slow: float-slow 9s ease-in-out infinite;
+  --animate-marquee: marquee 32s linear infinite;
+}
+
+:root {
+  --radius: 0.9rem;
+  --background: #fff8f8;
+  --foreground: #242424;
+  --card: #ffffff;
+  --card-foreground: #242424;
+  --popover: #ffffff;
+  --popover-foreground: #242424;
+  --primary: #b91c1c;
+  --primary-foreground: #ffffff;
+  --primary-deep: #8e1414;
+  --primary-glow: #dc2626;
+  --secondary: #f6d6d6;
+  --secondary-foreground: #242424;
+  --muted: #faf0f0;
+  --muted-foreground: #5a5a5a;
+  --accent: #f6d6d6;
+  --accent-foreground: #b91c1c;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --charcoal: #242424;
+  --charcoal-soft: #2d2d2d;
+  --charcoal-foreground: #fff8f8;
+  --border: #eadbdb;
+  --input: #eadbdb;
+  --ring: #b91c1c;
+
+  --gradient-primary: linear-gradient(135deg, #8e1414 0%, #b91c1c 55%, #dc2626 100%);
+  --gradient-dark: linear-gradient(160deg, #1c1c1c 0%, #242424 60%, #331a1a 100%);
+  --gradient-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 248, 248, 0.6));
+  --gradient-light: linear-gradient(120deg, #ffffff 0%, #fff8f8 50%, #faf0f0 100%);
+}
+
+.dark {
+  --background: oklch(0.16 0.01 25);
+  --foreground: oklch(0.97 0.004 30);
+  --card: oklch(0.21 0.014 25);
+  --card-foreground: oklch(0.97 0.004 30);
+  --popover: oklch(0.21 0.014 25);
+  --popover-foreground: oklch(0.97 0.004 30);
+  --secondary: oklch(0.26 0.015 25);
+  --secondary-foreground: oklch(0.97 0.004 30);
+  --muted: oklch(0.26 0.015 25);
+  --muted-foreground: oklch(0.72 0.012 30);
+  --accent: oklch(0.3 0.05 26);
+  --accent-foreground: oklch(0.95 0.02 30);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
+
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 84rem;
+  padding-inline: 1.25rem;
+}
+
+@utility gradient-primary {
+  background-image: var(--gradient-primary);
+}
+
+@utility gradient-dark {
+  background-image: var(--gradient-dark);
+}
+
+@utility gradient-light {
+  background-image: var(--gradient-light);
+}
+
+@utility text-gradient {
+  background-image: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility glass {
+  background-color: oklch(1 0 0 / 0.08);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid oklch(1 0 0 / 0.16);
+}
+
+@utility glass-light {
+  background-color: oklch(1 0 0 / 0.72);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid oklch(1 0 0 / 0.55);
+}
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+@utility shadow-float {
+  box-shadow: var(--shadow-float);
+}
+
+@utility shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility section-y {
+  padding-block: clamp(4rem, 8vw, 7.5rem);
+}
+
+@utility card-lift {
+  transition:
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-float);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -26px, 0) scale(1.05);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
