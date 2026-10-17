@@ -46,7 +46,7 @@ export function FaqSection() {
   return (
     <section
       id="faq-section"
-      className="section-y bg-white text-[#242424] border-t border-border/80 relative"
+      className="section-y bg-white text-[#242424] border-t border-border/80 relative scroll-mt-20"
       aria-label="Frequently Asked Questions"
     >
       <div className="container-x max-w-4xl">

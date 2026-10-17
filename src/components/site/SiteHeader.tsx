@@ -67,15 +67,16 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation with refined hover underline */}
         <nav className="hidden lg:flex items-center gap-1 xl:gap-2" aria-label="Main Navigation">
           {navLinks.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              className="relative px-3 py-1.5 text-xs font-bold text-[#242424]/80 hover:text-[#B91C1C] transition-colors rounded-full hover:bg-[#F6D6D6]/40"
+              className="group relative px-3 py-2 text-xs font-bold text-[#242424]/85 hover:text-[#B91C1C] transition-colors"
             >
-              {item.label}
+              <span>{item.label}</span>
+              <span className="absolute bottom-0.5 left-3 right-3 h-[2px] bg-[#B91C1C] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
             </a>
           ))}
         </nav>

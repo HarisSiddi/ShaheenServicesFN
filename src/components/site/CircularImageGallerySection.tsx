@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Camera, ChevronDown, ShieldCheck } from "lucide-react";
-import img1 from "@/assets/gallery/1.png";
-import img2 from "@/assets/gallery/2.png";
-import img3 from "@/assets/gallery/3.png";
-import img4 from "@/assets/gallery/4.png";
+import img1 from "@/assets/gallery/1.jpg";
+import img2 from "@/assets/gallery/2.jpg";
+import img3 from "@/assets/gallery/3.jpg";
+import img4 from "@/assets/gallery/4.jpg";
 import { cn } from "@/lib/utils";
 
 interface GalleryItem {
@@ -42,7 +42,6 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 2,
-    number: "03",
     label: "Image 3",
     number: "03",
     title: "Commercial AC Servicing & Commissioning",
@@ -54,7 +53,7 @@ const galleryItems: GalleryItem[] = [
   },
   {
     id: 3,
-    number: "04",
+    label: "Image 4",
     number: "04",
     title: "Multi-Disciplinary Engineering Operations Fleet",
     category: "Enterprise Workforce",
@@ -112,24 +111,41 @@ export function CircularImageGallerySection() {
 
   const total = galleryItems.length;
 
+  const scrollToGalleryIndex = (idx: number) => {
+    if (!containerRef.current) {
+      setActiveIndex(idx);
+      return;
+    }
+    const containerTop = containerRef.current.offsetTop;
+    const totalDistance = containerRef.current.offsetHeight - window.innerHeight;
+    const targetScroll = containerTop + totalDistance * (idx * 0.26 + 0.04);
+    window.scrollTo({
+      top: targetScroll,
+      behavior: "smooth",
+    });
+    setActiveIndex(idx);
+  };
+
   const nextImage = () => {
-    setActiveIndex((prev) => (prev + 1) % total);
+    const nextIdx = (activeIndex + 1) % total;
+    scrollToGalleryIndex(nextIdx);
   };
 
   const prevImage = () => {
-    setActiveIndex((prev) => (prev - 1 + total) % total);
+    const prevIdx = (activeIndex - 1 + total) % total;
+    scrollToGalleryIndex(prevIdx);
   };
 
   const current = galleryItems[activeIndex];
 
-  // Rotation angles for circular orbit
-  const orbitAngle = activeIndex * 90; // 0, 90, 180, 270
+  // Physical continuous rotation along circular track driven by scroll + manual selection
+  const orbitAngle = scrollProgress * 270;
 
   return (
     <section
       id="circular-gallery"
       ref={containerRef}
-      className="relative w-full bg-[#242424] text-[#FFF8F8] h-[320vh] lg:h-[350vh] border-t border-white/10"
+      className="relative w-full bg-[#242424] text-[#FFF8F8] h-[320vh] lg:h-[350vh] border-t border-white/10 scroll-mt-20"
       aria-label="Shaheen Services Circular Image Gallery"
     >
       {/* Sticky Full-Screen Pinned Stage */}
@@ -203,7 +219,7 @@ export function CircularImageGallerySection() {
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => setActiveIndex(idx)}
+                    onClick={() => scrollToGalleryIndex(idx)}
                     className={cn(
                       "hidden sm:flex absolute -translate-x-1/2 -translate-y-1/2 rounded-full border items-center justify-center transition-all duration-500",
                       isActive
@@ -287,7 +303,7 @@ export function CircularImageGallerySection() {
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => setActiveIndex(idx)}
+                  onClick={() => scrollToGalleryIndex(idx)}
                   className={cn(
                     "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300",
                     idx === activeIndex

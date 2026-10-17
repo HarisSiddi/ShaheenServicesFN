@@ -12,7 +12,7 @@ import {
   Bug,
   ShieldAlert,
 } from "lucide-react";
-import heroAcImg from "@/assets/gallery/3.png";
+import heroAcImg from "@/assets/gallery/3.jpg";
 import heroCleanImg from "@/assets/hero-clean.jpg";
 import heroPestImg from "@/assets/hero-pest.jpg";
 import heroTermiteImg from "@/assets/hero-maint.jpg";
@@ -329,10 +329,20 @@ export function Signature3DScrollHero() {
           className="pointer-events-none absolute inset-0 h-full w-full opacity-70"
         />
 
-        {/* Ambient Glow */}
+        {/* Ambient Glow shifting in sync with active scene lighting */}
         <div
           aria-hidden
-          className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] h-[35vh] rounded-full bg-[#F6D6D6]/45 blur-3xl"
+          className={cn(
+            "pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] h-[35vh] rounded-full blur-3xl transition-all duration-700 ease-out",
+            activeSceneIndex === 0 &&
+              "bg-gradient-to-tr from-[#F6D6D6]/50 via-sky-100/35 to-[#B91C1C]/15",
+            activeSceneIndex === 1 &&
+              "bg-gradient-to-tr from-[#F6D6D6]/50 via-emerald-100/35 to-[#B91C1C]/15",
+            activeSceneIndex === 2 &&
+              "bg-gradient-to-tr from-[#F6D6D6]/50 via-amber-100/35 to-[#B91C1C]/15",
+            activeSceneIndex === 3 &&
+              "bg-gradient-to-tr from-[#F6D6D6]/50 via-rose-100/35 to-[#B91C1C]/15",
+          )}
         />
 
         {/* Scene Switcher Bar (Pill Controls) */}
@@ -375,22 +385,27 @@ export function Signature3DScrollHero() {
           {/* LEFT COLUMN: Concise 3-Line Description & Contextual CTA   */}
           {/* ========================================================= */}
           <div className="lg:col-span-4 flex flex-col justify-center order-2 lg:order-1 transition-all duration-500">
-            {/* Division Eyebrow */}
-            <div className="inline-flex items-center gap-2 w-fit rounded-full bg-[#F6D6D6] px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-widest text-[#B91C1C]">
-              <CurrentIcon className="h-3.5 w-3.5" />
-              <span>{current.category}</span>
-            </div>
+            <div
+              key={activeSceneIndex}
+              className="animate-in fade-in slide-in-from-left-2 duration-500"
+            >
+              {/* Division Eyebrow */}
+              <div className="inline-flex items-center gap-2 w-fit rounded-full bg-[#F6D6D6] px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-widest text-[#B91C1C]">
+                <CurrentIcon className="h-3.5 w-3.5" />
+                <span>{current.category}</span>
+              </div>
 
-            {/* Concise 3-line description with dedicated rhythm */}
-            <div className="mt-4 space-y-2 min-h-[5.5rem]">
-              {current.descriptionLines.map((line, lIdx) => (
-                <p
-                  key={lIdx}
-                  className="text-xs sm:text-sm md:text-[0.95rem] font-medium leading-relaxed text-[#242424]/90"
-                >
-                  {line}
-                </p>
-              ))}
+              {/* Concise 3-line description with dedicated rhythm */}
+              <div className="mt-4 space-y-2 min-h-[5.5rem]">
+                {current.descriptionLines.map((line, lIdx) => (
+                  <p
+                    key={lIdx}
+                    className="text-xs sm:text-sm md:text-[0.95rem] font-medium leading-relaxed text-[#242424]/90"
+                  >
+                    {line}
+                  </p>
+                ))}
+              </div>
             </div>
 
             {/* Equipment HUD Chip */}
@@ -510,31 +525,36 @@ export function Signature3DScrollHero() {
           {/* RIGHT COLUMN: Large Service Heading & Scene Indicator     */}
           {/* ========================================================= */}
           <div className="lg:col-span-4 flex flex-col justify-center order-3 text-left lg:text-right">
-            {/* Scene Numeric Counter */}
-            <div className="flex items-center lg:justify-end gap-3">
-              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[#B91C1C]">
-                Scene Progression
+            <div
+              key={activeSceneIndex}
+              className="animate-in fade-in slide-in-from-right-2 duration-500"
+            >
+              {/* Scene Numeric Counter */}
+              <div className="flex items-center lg:justify-end gap-3">
+                <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[#B91C1C]">
+                  Scene Progression
+                </span>
+                <span className="font-display text-4xl lg:text-5xl font-extrabold text-[#242424] tracking-tight">
+                  {current.number}
+                  <span className="text-xl text-[#242424]/40 font-normal">/04</span>
+                </span>
+              </div>
+
+              {/* Sub-heading */}
+              <span className="mt-2 block text-xs font-bold uppercase tracking-widest text-[#242424]/60">
+                {current.eyebrow}
               </span>
-              <span className="font-display text-4xl lg:text-5xl font-extrabold text-[#242424] tracking-tight">
-                {current.number}
-                <span className="text-xl text-[#242424]/40 font-normal">/04</span>
-              </span>
-            </div>
 
-            {/* Sub-heading */}
-            <span className="mt-2 text-xs font-bold uppercase tracking-widest text-[#242424]/60">
-              {current.eyebrow}
-            </span>
+              {/* Massive Heading */}
+              <h1 className="mt-2 font-display text-3xl sm:text-4xl lg:text-5xl font-black text-[#242424] tracking-tight leading-none uppercase">
+                {current.title}
+              </h1>
 
-            {/* Massive Heading */}
-            <h1 className="mt-2 font-display text-3xl sm:text-4xl lg:text-5xl font-black text-[#242424] tracking-tight leading-none uppercase">
-              {current.title}
-            </h1>
-
-            {/* Accent Bar */}
-            <div className="mt-4 flex items-center lg:justify-end gap-2">
-              <div className="h-1 w-12 rounded-full bg-[#B91C1C]" />
-              <div className="h-1 w-4 rounded-full bg-[#F6D6D6]" />
+              {/* Accent Bar */}
+              <div className="mt-4 flex items-center lg:justify-end gap-2">
+                <div className="h-1 w-12 rounded-full bg-[#B91C1C]" />
+                <div className="h-1 w-4 rounded-full bg-[#F6D6D6]" />
+              </div>
             </div>
 
             {/* Context Badge */}

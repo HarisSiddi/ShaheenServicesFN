@@ -20,7 +20,7 @@ export function OperationalStandards3DSection() {
   return (
     <section
       id="operational-standards"
-      className="section-y bg-[#242424] text-[#FFF8F8] border-t border-white/10 relative overflow-hidden"
+      className="section-y bg-[#242424] text-[#FFF8F8] border-t border-white/10 relative overflow-hidden scroll-mt-20"
       aria-label="Our Operational Standards"
     >
       {/* Background Lighting */}

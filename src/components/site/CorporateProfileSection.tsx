@@ -15,7 +15,7 @@ export function CorporateProfileSection() {
   return (
     <section
       id="corporate-profile"
-      className="section-y bg-white text-[#242424] border-t border-border/80 relative overflow-hidden"
+      className="section-y bg-white text-[#242424] border-t border-border/80 relative overflow-hidden scroll-mt-20"
       aria-label="Corporate Profile"
     >
       {/* Subtle Background Glow */}

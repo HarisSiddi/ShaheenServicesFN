@@ -266,13 +266,46 @@ export function Services3DCircularSection() {
   }, []);
 
   const total = professionalServices.length;
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const scrollToCardIndex = (idx: number) => {
+    if (!containerRef.current) {
+      setActiveIndex(idx);
+      return;
+    }
+    const containerTop = containerRef.current.offsetTop;
+    const totalDistance = containerRef.current.offsetHeight - window.innerHeight;
+    const targetScroll = containerTop + totalDistance * ((idx + 0.2) / total);
+    window.scrollTo({
+      top: targetScroll,
+      behavior: "smooth",
+    });
+    setActiveIndex(idx);
+  };
 
   const nextCard = () => {
-    setActiveIndex((prev) => (prev + 1) % total);
+    const nextIdx = (activeIndex + 1) % total;
+    scrollToCardIndex(nextIdx);
   };
 
   const prevCard = () => {
-    setActiveIndex((prev) => (prev - 1 + total) % total);
+    const prevIdx = (activeIndex - 1 + total) % total;
+    scrollToCardIndex(prevIdx);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (diff > 45) {
+      nextCard();
+    } else if (diff < -45) {
+      prevCard();
+    }
+    setTouchStartX(null);
   };
 
   const activeService = professionalServices[activeIndex];
@@ -281,7 +314,7 @@ export function Services3DCircularSection() {
     <section
       id="services-3d"
       ref={containerRef}
-      className="relative w-full bg-[#FFF8F8] text-[#242424] h-[340vh] lg:h-[380vh] border-t border-border/80"
+      className="relative w-full bg-[#FFF8F8] text-[#242424] h-[340vh] lg:h-[380vh] border-t border-border/80 scroll-mt-20"
       aria-label="Our Professional Services 3D Circular Sequence"
     >
       {/* Pinned Sticky Stage */}
@@ -337,7 +370,11 @@ export function Services3DCircularSection() {
         {/* ========================================================================= */}
         {/* 3D CIRCULAR / CURVED DEPTH STAGE (Desktop & Tablet)                      */}
         {/* ========================================================================= */}
-        <div className="relative z-10 flex-1 w-full max-w-7xl mx-auto flex items-center justify-center my-auto perspective-1200 overflow-visible py-4">
+        <div
+          className="relative z-10 flex-1 w-full max-w-7xl mx-auto flex items-center justify-center my-auto perspective-1200 overflow-visible py-4 touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <div className="relative w-full max-w-4xl h-[400px] sm:h-[450px] flex items-center justify-center">
             {professionalServices.map((card, i) => {
               // Calculate offset relative to active card (-total/2 to +total/2)
@@ -346,22 +383,36 @@ export function Services3DCircularSection() {
               if (offset < -total / 2) offset += total;
 
               const isCurrent = offset === 0;
-              const isVisible = Math.abs(offset) <= 3; // Render immediate neighbors for 3D depth
+              const isVisible = isMobile ? Math.abs(offset) <= 1 : Math.abs(offset) <= 3; // Render immediate neighbors for 3D depth
 
-              if (!isVisible && !isMobile) return null;
+              if (!isVisible) return null;
 
               // 3D positioning along a curved cylindrical arc
               const angle = offset * 24; // degree step along circular path
-              const translateZ = Math.cos((offset * Math.PI) / 6) * 160 - Math.abs(offset) * 110;
-              const translateX = offset * 260;
-              const scale = isCurrent ? 1 : Math.max(0.78, 1 - Math.abs(offset) * 0.12);
-              const opacity = isCurrent ? 1 : Math.max(0.2, 0.7 - Math.abs(offset) * 0.22);
+              const translateZ = isMobile
+                ? isCurrent
+                  ? 0
+                  : -Math.abs(offset) * 60
+                : Math.cos((offset * Math.PI) / 6) * 160 - Math.abs(offset) * 110;
+              const translateX = isMobile ? offset * 32 : offset * 260;
+              const scale = isCurrent
+                ? 1
+                : isMobile
+                  ? Math.max(0.88, 1 - Math.abs(offset) * 0.08)
+                  : Math.max(0.78, 1 - Math.abs(offset) * 0.12);
+              const opacity = isCurrent
+                ? 1
+                : isMobile
+                  ? Math.abs(offset) === 1
+                    ? 0.35
+                    : 0
+                  : Math.max(0.2, 0.7 - Math.abs(offset) * 0.22);
               const IconComp = card.icon;
 
               return (
                 <div
                   key={card.id}
-                  onClick={() => setActiveIndex(i)}
+                  onClick={() => scrollToCardIndex(i)}
                   className={cn(
                     "absolute w-full max-w-[340px] sm:max-w-[420px] rounded-3xl border transition-all duration-700 ease-out cursor-pointer select-none",
                     isCurrent
@@ -457,7 +508,7 @@ export function Services3DCircularSection() {
               <button
                 key={s.id}
                 type="button"
-                onClick={() => setActiveIndex(idx)}
+                onClick={() => scrollToCardIndex(idx)}
                 className={cn(
                   "h-2 rounded-full transition-all duration-300",
                   idx === activeIndex

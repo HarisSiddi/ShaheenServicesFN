@@ -20,7 +20,7 @@ export function ConsultationProcessSection() {
   return (
     <section
       id="process-section"
-      className="section-y bg-[#FFF8F8] text-[#242424] border-t border-border/80 relative overflow-hidden"
+      className="section-y bg-[#FFF8F8] text-[#242424] border-t border-border/80 relative overflow-hidden scroll-mt-20"
       aria-label="Workflow Protocol"
     >
       {/* Background Lighting */}

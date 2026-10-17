@@ -67,7 +67,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="section-y bg-[#FFF8F8] text-[#242424] border-t border-border/80 relative"
+      className="section-y bg-[#FFF8F8] text-[#242424] border-t border-border/80 relative scroll-mt-20"
       aria-label="Contact and Service Consultation"
     >
       <div className="container-x">

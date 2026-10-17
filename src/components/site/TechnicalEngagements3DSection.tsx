@@ -135,19 +135,36 @@ export function TechnicalEngagements3DSection() {
 
   const total = technicalEngagements.length;
 
+  const scrollToEngagementIndex = (idx: number) => {
+    if (!containerRef.current) {
+      setActiveIndex(idx);
+      return;
+    }
+    const containerTop = containerRef.current.offsetTop;
+    const totalDistance = containerRef.current.offsetHeight - window.innerHeight;
+    const targetScroll = containerTop + totalDistance * ((idx + 0.25) / total);
+    window.scrollTo({
+      top: targetScroll,
+      behavior: "smooth",
+    });
+    setActiveIndex(idx);
+  };
+
   const nextEngagement = () => {
-    setActiveIndex((prev) => (prev + 1) % total);
+    const nextIdx = (activeIndex + 1) % total;
+    scrollToEngagementIndex(nextIdx);
   };
 
   const prevEngagement = () => {
-    setActiveIndex((prev) => (prev - 1 + total) % total);
+    const prevIdx = (activeIndex - 1 + total) % total;
+    scrollToEngagementIndex(prevIdx);
   };
 
   return (
     <section
       id="technical-engagements"
       ref={containerRef}
-      className="relative w-full bg-[#FFF8F8] text-[#242424] h-[300vh] lg:h-[340vh] border-t border-border/80"
+      className="relative w-full bg-[#FFF8F8] text-[#242424] h-[300vh] lg:h-[340vh] border-t border-border/80 scroll-mt-20"
       aria-label="Recent Technical Engagements 3D Passing Cards"
     >
       {/* Sticky Full-Screen Pinned Stage */}

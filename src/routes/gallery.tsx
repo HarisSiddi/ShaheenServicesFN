@@ -29,6 +29,30 @@ export const Route = createFileRoute("/gallery")({
 
 const items = [
   {
+    src: "/gallery/1.jpg",
+    cat: "Electrical",
+    alt: "Shaheen Services certified technician executing precision wiring and electrical testing",
+    tall: true,
+  },
+  {
+    src: "/gallery/2.jpg",
+    cat: "Maintenance",
+    alt: "Shaheen Services rapid dispatch technician with heavy-duty toolbox beside company van",
+    tall: true,
+  },
+  {
+    src: "/gallery/3.jpg",
+    cat: "HVAC",
+    alt: "Three Shaheen Services technicians servicing split AC unit with digital diagnostics",
+    tall: true,
+  },
+  {
+    src: "/gallery/4.jpg",
+    cat: "Maintenance",
+    alt: "Shaheen Services engineering fleet gathered in official uniform",
+    tall: true,
+  },
+  {
     src: "/hero/hero-maint.jpg",
     cat: "Maintenance",
     alt: "Shaheen Services building technician in uniform with tools",
